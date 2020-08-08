@@ -1,16 +1,9 @@
-# Structure:
-# Import libraries
-# Capture background image
-# Identify "blocking color"
-# Take live video feed
-# Replace "blocking color" with background image
 
 # Imports
 import cv2
 import numpy as np
 import wx
 import get_color
-import pdb
 
 have_block_color = False
 compare_background = False
@@ -18,11 +11,6 @@ lower_block = np.array([0, 0, 0])
 upper_block = np.array([255, 255, 255])
 
 def overlay_images(foreground, background):
-    # Set upper and lower color bounds
-    # lower_block = np.array([130, 130, 0])
-    # upper_block = np.array([255, 255, 178])
-    # lower_block = np.array([0, 60, 0])
-    # upper_block = np.array([120, 255, 100])
     # Create a mask that filters out the selected color spectrum
     mask = cv2.inRange(img, lower_block, upper_block)
     # Remove (set to 0 intensity, aka black) the pixels that are in the mask
@@ -42,7 +30,7 @@ while True:
     # Read the frame
     _, img = cap.read()
     # Flip horizontally
-    # img = cv2.flip(img, 1)
+    img = cv2.flip(img, 1)
     # Do the stuff
     if (compare_background and have_block_color):
         final_img = overlay_images(img, background.copy())
